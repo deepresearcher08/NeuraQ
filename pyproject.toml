@@ -1,0 +1,8 @@
+[project]
+name = "neuraq"
+version = "0.1.0"
+description = "Barren plateau research and mitigation toolkit"
+requires-python = ">=3.10"
+
+[project.scripts]
+neuraq = "neuraq_cli:main"

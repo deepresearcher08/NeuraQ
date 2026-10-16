@@ -1,0 +1,149 @@
+{
+  "config": {
+    "ns": [
+      8,
+      10
+    ],
+    "steps": 150,
+    "lr": 0.05,
+    "seeds": 4,
+    "shots": 4096,
+    "success_threshold": 0.1
+  },
+  "normalisation_bound": [
+    {
+      "n": 8,
+      "max_violation_low": 0.0,
+      "max_violation_high": 0.0,
+      "max_ratio_global_over_local": 2.8349628327410694
+    },
+    {
+      "n": 10,
+      "max_violation_low": 0.0,
+      "max_violation_high": 0.0,
+      "max_ratio_global_over_local": 2.681362210738342
+    }
+  ],
+  "results": {
+    "8": {
+      "exact": {
+        "local": {
+          "final_cost_G_median": 3.9051138789325535e-07,
+          "final_cost_G_iqr": [
+            3.3935119372885403e-07,
+            1.4124859918362986e-06
+          ],
+          "final_cost_L_median": 6.668195917658437e-08,
+          "success_rate": 1.0
+        },
+        "global": {
+          "final_cost_G_median": 7.874468673951807e-06,
+          "final_cost_G_iqr": [
+            5.517660131487689e-06,
+            1.2468765100165369e-05
+          ],
+          "final_cost_L_median": 2.6576460975258343e-06,
+          "success_rate": 1.0
+        },
+        "mix_ramp": {
+          "final_cost_G_median": 1.4025019091645774e-06,
+          "final_cost_G_iqr": [
+            1.335557311687996e-07,
+            4.264913668783343e-06
+          ],
+          "final_cost_L_median": 4.49229722643274e-07,
+          "success_rate": 1.0
+        }
+      },
+      "shots": {
+        "local": {
+          "final_cost_G_median": 0.00019278028095509603,
+          "final_cost_G_iqr": [
+            0.00014405006943654652,
+            0.0002473691256774102
+          ],
+          "final_cost_L_median": 3.914585721531694e-05,
+          "success_rate": 1.0
+        },
+        "global": {
+          "final_cost_G_median": 0.0007605485505716159,
+          "final_cost_G_iqr": [
+            0.0006735683164639517,
+            0.0008430498209532067
+          ],
+          "final_cost_L_median": 0.0001451577338208998,
+          "success_rate": 1.0
+        },
+        "mix_ramp": {
+          "final_cost_G_median": 0.0010347729380250081,
+          "final_cost_G_iqr": [
+            0.0007599616577602664,
+            0.0012719557658270875
+          ],
+          "final_cost_L_median": 0.00019250090895017724,
+          "success_rate": 1.0
+        }
+      }
+    },
+    "10": {
+      "exact": {
+        "local": {
+          "final_cost_G_median": 2.353890414025228e-05,
+          "final_cost_G_iqr": [
+            1.3284713862887765e-05,
+            4.426809204052806e-05
+          ],
+          "final_cost_L_median": 5.5398557907704316e-06,
+          "success_rate": 1.0
+        },
+        "global": {
+          "final_cost_G_median": 6.571681722189471e-06,
+          "final_cost_G_iqr": [
+            4.327354306055131e-06,
+            1.1147207073930465e-05
+          ],
+          "final_cost_L_median": 2.0885622689092997e-06,
+          "success_rate": 1.0
+        },
+        "mix_ramp": {
+          "final_cost_G_median": 1.03595958251268e-05,
+          "final_cost_G_iqr": [
+            8.019231673872529e-06,
+            1.5590177382424075e-05
+          ],
+          "final_cost_L_median": 1.7459453494628185e-06,
+          "success_rate": 1.0
+        }
+      },
+      "shots": {
+        "local": {
+          "final_cost_G_median": 0.0004754542845408771,
+          "final_cost_G_iqr": [
+            0.0004437427105951075,
+            0.0005284512886063464
+          ],
+          "final_cost_L_median": 8.269522919357453e-05,
+          "success_rate": 1.0
+        },
+        "global": {
+          "final_cost_G_median": 0.0010988220332117105,
+          "final_cost_G_iqr": [
+            0.0010254044842038235,
+            0.0012250758262814243
+          ],
+          "final_cost_L_median": 0.00020789054864828183,
+          "success_rate": 1.0
+        },
+        "mix_ramp": {
+          "final_cost_G_median": 0.002087909712119196,
+          "final_cost_G_iqr": [
+            0.0018048771304646494,
+            0.0025146574490788054
+          ],
+          "final_cost_L_median": 0.00035065444928533696,
+          "success_rate": 1.0
+        }
+      }
+    }
+  }
+}

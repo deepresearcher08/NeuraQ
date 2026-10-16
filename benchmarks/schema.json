@@ -1,0 +1,13 @@
+{
+  "name": "string",
+  "ansatz": {"topology": "line|ring|star|complete", "axes": "string", "M": 5, "n": 8},
+  "cost": "global|local",
+  "init": "random|identity|perturbed",
+  "ns": [4,6,8,10],
+  "M": 5,
+  "N_init": 256,
+  "seeds": 5,
+  "metrics": {"local_slope_log": -0.5, "global_slope_log": -1.0},
+  "slopes": {},
+  "bootstrap": true
+}

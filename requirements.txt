@@ -1,0 +1,22 @@
+# NeuraQ pinned environment — Python 3.14.7 (tested on Windows 11)
+#
+# Core: batched NumPy statevector simulator + main result.
+numpy==2.5.2
+scipy==1.18.1
+matplotlib==3.11.1
+#
+# Qiskit stack: cross-validation, Aer noise model, and the IBM hardware bonus run.
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-ibm-runtime==0.50.0
+#
+# Test suite.
+pytest==9.1.1
+#
+# Extras used only by the cross-track QEC / SQD experiments (E8, E12a, E12b).
+stim==1.16.0
+pymatching==2.4.0
+scikit-learn==1.9.0
+#
+# Documentation only (regenerating WRITEUP.pdf). Not needed to reproduce results.
+fpdf2==2.8.9

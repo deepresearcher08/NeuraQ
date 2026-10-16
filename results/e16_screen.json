@@ -1,0 +1,77 @@
+{
+  "config": {
+    "n": 8,
+    "M": 3,
+    "cost": "global",
+    "init": "random",
+    "topology": "line",
+    "n_samples": 256,
+    "grad_var": 5.437720873865729e-05,
+    "grad_mean_abs": 0.0018163534809388824,
+    "per_layer_var": [
+      5.087160232985276e-05,
+      2.5493128954264044e-05,
+      8.676689493185508e-05
+    ],
+    "per_layer_var_max": 8.676689493185508e-05,
+    "per_layer_var_min": 2.5493128954264044e-05,
+    "edge_to_mid_ratio": 5.399042915000282
+  },
+  "wide_ref": {
+    "n": 10,
+    "M": 3,
+    "cost": "global",
+    "init": "random",
+    "topology": "line",
+    "n_samples": 256,
+    "grad_var": 4.832199584761177e-06,
+    "grad_mean_abs": 0.000409335377953829,
+    "per_layer_var": [
+      6.2985596172476696e-06,
+      2.769378149154729e-06,
+      5.428660987881135e-06
+    ],
+    "per_layer_var_max": 6.2985596172476696e-06,
+    "per_layer_var_min": 2.769378149154729e-06,
+    "edge_to_mid_ratio": 4.2346042950863145
+  },
+  "slope_per_qubit": -1.2103216722460646,
+  "verdict": "barren plateau",
+  "p_success": 0.5,
+  "mitigation": {
+    "cost": "local",
+    "grad_var": 0.0011214801308296913,
+    "improvement_x": 20.624084186072245
+  },
+  "recommendation": "switch to a local cost C_L (gradient signal is polynomially large -- E2a/E15)",
+  "remediation": {
+    "primary": "local_cost",
+    "alternatives": [
+      "perturbed_identity",
+      "lambda_mix",
+      "layerwise"
+    ],
+    "suggested_config": {
+      "n": 8,
+      "M": 3,
+      "cost": "local",
+      "init": "random",
+      "topology": "line",
+      "n_samples": 256,
+      "grad_var": 5.437720873865729e-05,
+      "grad_mean_abs": 0.0018163534809388824,
+      "per_layer_var": [
+        5.087160232985276e-05,
+        2.5493128954264044e-05,
+        8.676689493185508e-05
+      ],
+      "per_layer_var_max": 8.676689493185508e-05,
+      "per_layer_var_min": 2.5493128954264044e-05,
+      "edge_to_mid_ratio": 5.399042915000282
+    },
+    "reason": "global cost shows weak/decaying init gradient signal; local cost gives polynomial variance perturbed identity (near-I) can re-inject edge-layer signal on non-|0...0> tasks",
+    "slope_per_qubit": -1.2103216722460646,
+    "mitigation_ratio": 20.624084186072245
+  },
+  "predictive": false
+}
