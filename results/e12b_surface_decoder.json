@@ -1,0 +1,53 @@
+{
+  "config": {
+    "exp": "E12-B surface code",
+    "routine": "rotated_memory_z"
+  },
+  "points": [
+    {
+      "d": 3,
+      "rounds": 3,
+      "p": 0.008,
+      "n_det": 24,
+      "n_train": 200000,
+      "n_test": 200000,
+      "ler_mwpm": 0.02584,
+      "ler_mlp": 0.02632,
+      "ratio_mlp_over_mwpm": 1.0185758513931888
+    },
+    {
+      "d": 3,
+      "rounds": 3,
+      "p": 0.012,
+      "n_det": 24,
+      "n_train": 200000,
+      "n_test": 200000,
+      "ler_mwpm": 0.05318,
+      "ler_mlp": 0.05311,
+      "ratio_mlp_over_mwpm": 0.9986837156825874
+    },
+    {
+      "d": 5,
+      "rounds": 5,
+      "p": 0.006,
+      "n_det": 120,
+      "n_train": 200000,
+      "n_test": 200000,
+      "ler_mwpm": 0.01216,
+      "ler_mlp": 0.073925,
+      "ratio_mlp_over_mwpm": 6.079358552631579
+    },
+    {
+      "d": 5,
+      "rounds": 5,
+      "p": 0.01,
+      "n_det": 120,
+      "n_train": 200000,
+      "n_test": 200000,
+      "ler_mwpm": 0.04727,
+      "ler_mlp": 0.18265,
+      "ratio_mlp_over_mwpm": 3.863972921514703
+    }
+  ],
+  "verdict": "tie / no beat (within noise)"
+}

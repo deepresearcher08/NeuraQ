@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+venv/
+.DS_Store
+
+# local credentials - never commit
+ibmapi.txt
+ibmcrn.txt

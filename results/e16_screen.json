@@ -1,0 +1,44 @@
+{
+  "config": {
+    "n": 8,
+    "M": 5,
+    "cost": "global",
+    "init": "random",
+    "topology": "line",
+    "n_samples": 128,
+    "grad_var": 2.681854301043843e-05,
+    "grad_mean_abs": 0.001688731217410326,
+    "per_layer_var": [
+      3.526927851146926e-05,
+      1.686565419159301e-05,
+      2.977843717109382e-05,
+      1.6231807455158292e-05,
+      3.594753772287777e-05
+    ]
+  },
+  "wide_ref": {
+    "n": 10,
+    "M": 5,
+    "cost": "global",
+    "init": "random",
+    "topology": "line",
+    "n_samples": 128,
+    "grad_var": 2.101304531896997e-06,
+    "grad_mean_abs": 0.0004129094475188382,
+    "per_layer_var": [
+      2.798609215402599e-06,
+      1.3793857244213775e-06,
+      2.1704695359473042e-06,
+      1.0435941464463885e-06,
+      3.114464037267318e-06
+    ]
+  },
+  "slope_per_qubit": -1.2732675970551748,
+  "verdict": "barren plateau",
+  "mitigation": {
+    "cost": "local",
+    "grad_var": 0.0010027008695415944,
+    "improvement_x": 37.38834242976282
+  },
+  "recommendation": "switch to a local cost C_L (gradient signal is polynomially large -- E2a/E15)"
+}

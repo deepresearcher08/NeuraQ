@@ -1,0 +1,510 @@
+{
+  "config": {
+    "n": [
+      8,
+      10
+    ],
+    "h": [
+      1.0,
+      2.0
+    ],
+    "M": "2n+1",
+    "train_steps": 400,
+    "threshold": 0.01,
+    "chis": {
+      "8": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "10": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ]
+    }
+  },
+  "cases": {
+    "n8_h1": {
+      "E0": -9.837951447459425,
+      "E1": -9.46887800960621,
+      "E_trained": -9.83583510543644,
+      "trained_rel_error": 0.005734203022832397,
+      "trained_infidelity": 0.0006733361793028747,
+      "chi_max_exact": 16,
+      "spectra": {
+        "exact_gs": {
+          "mid_rank_significant": 6,
+          "max_rank_significant": 6,
+          "exact_bond": 16
+        },
+        "trained": {
+          "mid_rank_significant": 6,
+          "max_rank_significant": 7,
+          "exact_bond": 16
+        }
+      },
+      "sweeps": {
+        "exact_gs": [
+          {
+            "chi": 1,
+            "E": -7.999999999999999,
+            "rel_error": 4.979907137588157,
+            "fidelity": 0.5652563398041096,
+            "bond": 1,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 2,
+            "E": -9.83180371143112,
+            "rel_error": 0.016657216146642184,
+            "fidelity": 0.9986248533352008,
+            "bond": 2,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 4,
+            "E": -9.837949737290435,
+            "rel_error": 4.633682118876417e-06,
+            "fidelity": 0.9999996992045399,
+            "bond": 4,
+            "trunc_weight": 1.1102230246251565e-16
+          },
+          {
+            "chi": 8,
+            "E": -9.837951447441244,
+            "rel_error": 4.9261232011208465e-11,
+            "fidelity": 0.9999999999973768,
+            "bond": 8,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 16,
+            "E": -9.837951447459417,
+            "rel_error": 1.9252069178782008e-14,
+            "fidelity": 0.9999999999999998,
+            "bond": 16,
+            "trunc_weight": 0.0
+          }
+        ],
+        "trained": [
+          {
+            "chi": 1,
+            "E": -7.999991344596678,
+            "rel_error": 4.9799305892983945,
+            "fidelity": 0.5661898340144066,
+            "bond": 1,
+            "trunc_weight": 4.440892098500626e-16
+          },
+          {
+            "chi": 2,
+            "E": -9.832593175569698,
+            "rel_error": 0.014518172645784082,
+            "fidelity": 0.9993801217494465,
+            "bond": 2,
+            "trunc_weight": 8.881784197001252e-16
+          },
+          {
+            "chi": 4,
+            "E": -9.835795894057073,
+            "rel_error": 0.005840445779273114,
+            "fidelity": 0.9999864628816689,
+            "bond": 4,
+            "trunc_weight": 6.661338147750939e-16
+          },
+          {
+            "chi": 8,
+            "E": -9.835835107103058,
+            "rel_error": 0.005734198507148872,
+            "fidelity": 0.999999999901281,
+            "bond": 8,
+            "trunc_weight": 2.220446049250313e-16
+          },
+          {
+            "chi": 16,
+            "E": -9.835835105436438,
+            "rel_error": 0.00573420302283721,
+            "fidelity": 1.0000000000000009,
+            "bond": 16,
+            "trunc_weight": 2.220446049250313e-16
+          }
+        ]
+      },
+      "thresholds": {
+        "exact_gs_d5_chi": 4,
+        "reproduce_chi": 4,
+        "trained_d5_chi": 4
+      }
+    },
+    "n8_h2": {
+      "E0": -16.88514149320817,
+      "E1": -14.694894353324132,
+      "E_trained": -16.883837533267585,
+      "trained_rel_error": 0.0005953483133664904,
+      "trained_infidelity": 0.0001695390192240076,
+      "chi_max_exact": 16,
+      "spectra": {
+        "exact_gs": {
+          "mid_rank_significant": 4,
+          "max_rank_significant": 4,
+          "exact_bond": 16
+        },
+        "trained": {
+          "mid_rank_significant": 5,
+          "max_rank_significant": 5,
+          "exact_bond": 16
+        }
+      },
+      "sweeps": {
+        "exact_gs": [
+          {
+            "chi": 1,
+            "E": -16.0,
+            "rel_error": 0.4041285921985196,
+            "fidelity": 0.8905700577561332,
+            "bond": 1,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 2,
+            "E": -16.88496627688603,
+            "rel_error": 7.999842526921501e-05,
+            "fidelity": 0.9999777747960364,
+            "bond": 2,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 4,
+            "E": -16.88514147417834,
+            "rel_error": 8.688439678602566e-09,
+            "fidelity": 0.9999999978002283,
+            "bond": 4,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 8,
+            "E": -16.885141493208163,
+            "rel_error": 3.244121281207196e-15,
+            "fidelity": 0.9999999999999984,
+            "bond": 8,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 16,
+            "E": -16.885141493208167,
+            "rel_error": 1.622060640603598e-15,
+            "fidelity": 0.9999999999999987,
+            "bond": 16,
+            "trunc_weight": 0.0
+          }
+        ],
+        "trained": [
+          {
+            "chi": 1,
+            "E": -15.999997564487934,
+            "rel_error": 0.4041297041789995,
+            "fidelity": 0.8913487032152533,
+            "bond": 1,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 2,
+            "E": -16.884689830452764,
+            "rel_error": 0.00020621542983957668,
+            "fidelity": 0.9999367386637161,
+            "bond": 2,
+            "trunc_weight": 2.220446049250313e-16
+          },
+          {
+            "chi": 4,
+            "E": -16.883840385784993,
+            "rel_error": 0.0005940459409738436,
+            "fidelity": 0.999999838800652,
+            "bond": 4,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 8,
+            "E": -16.883837533275248,
+            "rel_error": 0.0005953483098677056,
+            "fidelity": 0.999999999995123,
+            "bond": 8,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 16,
+            "E": -16.88383753326758,
+            "rel_error": 0.0005953483133681125,
+            "fidelity": 0.9999999999999998,
+            "bond": 16,
+            "trunc_weight": 1.1102230246251565e-16
+          }
+        ]
+      },
+      "thresholds": {
+        "exact_gs_d5_chi": 2,
+        "reproduce_chi": 2,
+        "trained_d5_chi": 2
+      }
+    },
+    "n10_h1": {
+      "E0": -12.38148999965475,
+      "E1": -12.082569625309054,
+      "E_trained": -12.34257926479242,
+      "trained_rel_error": 0.13017090235987366,
+      "trained_infidelity": 0.01754962421884143,
+      "chi_max_exact": 32,
+      "spectra": {
+        "exact_gs": {
+          "mid_rank_significant": 6,
+          "max_rank_significant": 6,
+          "exact_bond": 32
+        },
+        "trained": {
+          "mid_rank_significant": 9,
+          "max_rank_significant": 10,
+          "exact_bond": 32
+        }
+      },
+      "sweeps": {
+        "exact_gs": [
+          {
+            "chi": 1,
+            "E": -10.000000000000002,
+            "rel_error": 7.966971153664469,
+            "fidelity": 0.46540632760914363,
+            "bond": 1,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 2,
+            "E": -12.369297532680575,
+            "rel_error": 0.04078834372151275,
+            "fidelity": 0.9970439288310675,
+            "bond": 2,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 4,
+            "E": -12.381481165334113,
+            "rel_error": 2.955409331379752e-05,
+            "fidelity": 0.9999982678032381,
+            "bond": 4,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 8,
+            "E": -12.381489998552071,
+            "rel_error": 3.6888714579655706e-09,
+            "fidelity": 0.9999999998712026,
+            "bond": 8,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 16,
+            "E": -12.381489999654761,
+            "rel_error": -3.565545192337922e-14,
+            "fidelity": 1.0,
+            "bond": 16,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 32,
+            "E": -12.381489999654752,
+            "rel_error": -5.9425753205632046e-15,
+            "fidelity": 0.9999999999999993,
+            "bond": 32,
+            "trunc_weight": 0.0
+          }
+        ],
+        "trained": [
+          {
+            "chi": 1,
+            "E": -9.999721736136795,
+            "rel_error": 7.967902049940159,
+            "fidelity": 0.49666963938854075,
+            "bond": 1,
+            "trunc_weight": 7.771561172376096e-16
+          },
+          {
+            "chi": 2,
+            "E": -12.354244190318369,
+            "rel_error": 0.09114738129182295,
+            "fidelity": 0.9982196760571642,
+            "bond": 2,
+            "trunc_weight": 4.440892098500626e-16
+          },
+          {
+            "chi": 4,
+            "E": -12.3451556964746,
+            "rel_error": 0.12155177866239887,
+            "fidelity": 0.9997450723626491,
+            "bond": 4,
+            "trunc_weight": 6.661338147750939e-16
+          },
+          {
+            "chi": 8,
+            "E": -12.34258274683734,
+            "rel_error": 0.130159253622552,
+            "fidelity": 0.9999995822443034,
+            "bond": 8,
+            "trunc_weight": 1.3322676295501878e-15
+          },
+          {
+            "chi": 16,
+            "E": -12.342579264965696,
+            "rel_error": 0.1301709017801992,
+            "fidelity": 0.9999999999811406,
+            "bond": 16,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 32,
+            "E": -12.342579264792413,
+            "rel_error": 0.13017090235989742,
+            "fidelity": 1.0000000000000013,
+            "bond": 32,
+            "trunc_weight": 2.220446049250313e-16
+          }
+        ]
+      },
+      "thresholds": {
+        "exact_gs_d5_chi": 4,
+        "reproduce_chi": 2,
+        "trained_d5_chi": null
+      }
+    },
+    "n10_h2": {
+      "E0": -21.139319115631203,
+      "E1": -19.00601192291366,
+      "E_trained": -21.13795891124066,
+      "trained_rel_error": 0.000637603620888239,
+      "trained_infidelity": 0.00018514887923282153,
+      "chi_max_exact": 32,
+      "spectra": {
+        "exact_gs": {
+          "mid_rank_significant": 4,
+          "max_rank_significant": 4,
+          "exact_bond": 32
+        },
+        "trained": {
+          "mid_rank_significant": 6,
+          "max_rank_significant": 7,
+          "exact_bond": 32
+        }
+      },
+      "sweeps": {
+        "exact_gs": [
+          {
+            "chi": 1,
+            "E": -20.000000000000064,
+            "rel_error": 0.534062379539349,
+            "fidelity": 0.8610189660581155,
+            "bond": 1,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 2,
+            "E": -21.139063283039757,
+            "rel_error": 0.00011992299670624832,
+            "fidelity": 0.9999669952979592,
+            "bond": 2,
+            "trunc_weight": 8.881784197001252e-16
+          },
+          {
+            "chi": 4,
+            "E": -21.139319072285616,
+            "rel_error": 2.0318492725043297e-08,
+            "fidelity": 0.9999999946596763,
+            "bond": 4,
+            "trunc_weight": 4.440892098500626e-16
+          },
+          {
+            "chi": 8,
+            "E": -21.13931911563109,
+            "rel_error": 5.329135818306342e-14,
+            "fidelity": 0.9999999999999942,
+            "bond": 8,
+            "trunc_weight": 1.1102230246251565e-15
+          },
+          {
+            "chi": 16,
+            "E": -21.139319115631217,
+            "rel_error": -6.661419772882928e-15,
+            "fidelity": 1.0000000000000018,
+            "bond": 16,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 32,
+            "E": -21.1393191156312,
+            "rel_error": 1.665354943220732e-15,
+            "fidelity": 1.0000000000000009,
+            "bond": 32,
+            "trunc_weight": 8.881784197001252e-16
+          }
+        ],
+        "trained": [
+          {
+            "chi": 1,
+            "E": -19.999995325843095,
+            "rel_error": 0.5340645705772759,
+            "fidelity": 0.8618402176008293,
+            "bond": 1,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 2,
+            "E": -21.138819124005632,
+            "rel_error": 0.00023437394636712013,
+            "fidelity": 0.9999288158963272,
+            "bond": 2,
+            "trunc_weight": 4.440892098500626e-16
+          },
+          {
+            "chi": 4,
+            "E": -21.137997638923263,
+            "rel_error": 0.0006194497972213342,
+            "fidelity": 0.999997504007864,
+            "bond": 4,
+            "trunc_weight": 7.771561172376096e-16
+          },
+          {
+            "chi": 8,
+            "E": -21.137958917254533,
+            "rel_error": 0.0006376008018503321,
+            "fidelity": 0.9999999996151558,
+            "bond": 8,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 16,
+            "E": -21.137958911240716,
+            "rel_error": 0.0006376036208615933,
+            "fidelity": 0.9999999999999989,
+            "bond": 16,
+            "trunc_weight": 0.0
+          },
+          {
+            "chi": 32,
+            "E": -21.137958911240645,
+            "rel_error": 0.0006376036208949004,
+            "fidelity": 0.9999999999999998,
+            "bond": 32,
+            "trunc_weight": 7.771561172376096e-16
+          }
+        ]
+      },
+      "thresholds": {
+        "exact_gs_d5_chi": 2,
+        "reproduce_chi": 2,
+        "trained_d5_chi": 2
+      }
+    }
+  }
+}

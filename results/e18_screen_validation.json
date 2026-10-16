@@ -1,0 +1,242 @@
+{
+  "config": {
+    "ns": [
+      4,
+      6,
+      8,
+      10
+    ],
+    "depths": [
+      3,
+      6
+    ],
+    "costs": [
+      "global",
+      "local"
+    ],
+    "shots": 2000,
+    "steps": 60,
+    "lr": 0.08,
+    "seeds": 3,
+    "success_threshold": 0.25,
+    "screen_samples": 128
+  },
+  "rows": [
+    {
+      "n": 4,
+      "M": 3,
+      "cost": "global",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.8955081332369192,
+      "init_cost": 0.718704692768418,
+      "final_cost_median": 0.002161374069890698,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 4,
+      "M": 3,
+      "cost": "local",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.37720419400839633,
+      "init_cost": 0.2617430637114916,
+      "final_cost_median": 0.00033117127115112055,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 4,
+      "M": 6,
+      "cost": "global",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.8650939938000808,
+      "init_cost": 0.9981467140052468,
+      "final_cost_median": 0.0021634968673904797,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 4,
+      "M": 6,
+      "cost": "local",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.42684572107188057,
+      "init_cost": 0.5627891200558478,
+      "final_cost_median": 0.00045840816347642033,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 6,
+      "M": 3,
+      "cost": "global",
+      "screen_verdict": "barren plateau",
+      "screen_slope": -1.229440964746085,
+      "init_cost": 0.9987168799675478,
+      "final_cost_median": 0.002559190694426672,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": false,
+      "correct": false
+    },
+    {
+      "n": 6,
+      "M": 3,
+      "cost": "local",
+      "screen_verdict": "trainable",
+      "screen_slope": -0.2774550187775424,
+      "init_cost": 0.4649968054738518,
+      "final_cost_median": 0.0006019799863293818,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 6,
+      "M": 6,
+      "cost": "global",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.881213761395049,
+      "init_cost": 0.994098067047966,
+      "final_cost_median": 0.0016367052347256994,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 6,
+      "M": 6,
+      "cost": "local",
+      "screen_verdict": "trainable",
+      "screen_slope": -0.296504829345948,
+      "init_cost": 0.4982525972893167,
+      "final_cost_median": 0.000420059794883465,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 8,
+      "M": 3,
+      "cost": "global",
+      "screen_verdict": "barren plateau",
+      "screen_slope": -1.3836248265891706,
+      "init_cost": 0.9999675330241641,
+      "final_cost_median": 0.0018888313615657015,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": false,
+      "correct": false
+    },
+    {
+      "n": 8,
+      "M": 3,
+      "cost": "local",
+      "screen_verdict": "trainable",
+      "screen_slope": -0.2011469906571537,
+      "init_cost": 0.5964836936435355,
+      "final_cost_median": 0.0003308238291512833,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 8,
+      "M": 6,
+      "cost": "global",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.8617518220478173,
+      "init_cost": 0.9999999480838883,
+      "final_cost_median": 0.0013126508860251684,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 8,
+      "M": 6,
+      "cost": "local",
+      "screen_verdict": "trainable",
+      "screen_slope": -0.231145132260834,
+      "init_cost": 0.6453418383270435,
+      "final_cost_median": 0.0005126292524988418,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 10,
+      "M": 3,
+      "cost": "global",
+      "screen_verdict": "marginal",
+      "screen_slope": -0.5740018874471566,
+      "init_cost": 0.999954109986488,
+      "final_cost_median": 0.003306885107875357,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 10,
+      "M": 3,
+      "cost": "local",
+      "screen_verdict": "trainable",
+      "screen_slope": -0.19101547378428618,
+      "init_cost": 0.5556442973750375,
+      "final_cost_median": 0.0004007717667471322,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    },
+    {
+      "n": 10,
+      "M": 6,
+      "cost": "global",
+      "screen_verdict": "barren plateau",
+      "screen_slope": -1.2379712332071957,
+      "init_cost": 0.9987816199549029,
+      "final_cost_median": 0.00265388367095154,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": false,
+      "correct": false
+    },
+    {
+      "n": 10,
+      "M": 6,
+      "cost": "local",
+      "screen_verdict": "trainable",
+      "screen_slope": -0.17772109743552544,
+      "init_cost": 0.4815304840534471,
+      "final_cost_median": 0.000499237196986968,
+      "success_rate": 1.0,
+      "actual_success": true,
+      "predicted_success": true,
+      "correct": true
+    }
+  ],
+  "confusion": {
+    "tp": 13,
+    "tn": 0,
+    "fp": 0,
+    "fn": 3,
+    "accuracy": 0.8125,
+    "n_configs": 16
+  }
+}
