@@ -1,6 +1,6 @@
-# Benchmark Suite (Minimal, Reproducible)
+# Benchmark suite
 
-This is the minimal statistical suite (from SPEC D3/D4). Submissions must use fixed seeds, bootstrap CIs, and publish JSON.
+A small, reproducible statistical suite. Submissions must use fixed seeds, report bootstrap confidence intervals and publish their results as JSON.
 
 Suite:
 1. Global random variance vs n: slopes for L=O(log n) and L=O(n), N_init fixed

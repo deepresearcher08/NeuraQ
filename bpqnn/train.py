@@ -1,11 +1,11 @@
-"""Training on the palindromic ansatz (SPEC section 7).
+"""Training on the palindromic ansatz.
 
 Two optimizers are provided, both driven by the exact adjoint gradient:
 
-- ``adam_train``: Adam (SPEC D1: beta1=0.9, beta2=0.999, eps=1e-8).
+- ``adam_train``: Adam.
 - ``lbfgs_train``: L-BFGS-B oracle (SciPy), for reference optimal costs.
 
-Budget accounting follows SPEC D2 (state preparations): a cost evaluation
+Budget is counted in state preparations: a cost evaluation
 costs 1; a gradient costs ``grad_cost`` (default ``2*M*n + 1``, the
 parameter-shift convention, so budgets stay comparable to any shift-based
 baseline). The actual adjoint work is ~2 forward passes and is reported

@@ -1,4 +1,4 @@
-"""Initialisation strategies (SPEC section 6).
+"""Initialisation strategies.
 
 Parameter shape is ``(M, n)`` (or ``(batch, M, n)``).
 

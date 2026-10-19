@@ -1,4 +1,4 @@
-"""E14: CTQD -- train classically, deploy quantumly (SPEC §14r).
+"""E14: CTQD -- train classically, deploy quantumly.
 
 The plateau-mitigation arms (local costs, identity init, layerwise training,
 support annealing, E13 CSA) all remain inside the Cerezo-Larocca dictum:
@@ -30,14 +30,14 @@ Samplers compared on the critical TFIM at n = 8,10,12:
 
 Headline budget metric: per-step quantum gradient evaluations.
 
-  hea : (2*M*n + 1) per Adam step        (E8 conventions, SPEC D2)
+  hea : (2*M*n + 1) per Adam step        (E8 conventions)
   ctqd: 0 -- training is pure classical
 
 A classical-surrogate (MPS / Schmidt) frontier is reported for each deployed
-distribution (SPEC D9/E9): half-chain entropy, significant Schmidt rank at the
+distribution: half-chain entropy, significant Schmidt rank at the
 mid cut, and exact MPS bond.
 
-Honest boundary (also in SPEC §14r): at n <= 16 everything is classically
+Honest boundary: at n <= 16 everything is classically
 diagonalisable and the critical-TFIM target is area-law, so no sampling
 *advantage* is claimed. The wins are (1) the framework: optimisation is
 classical while the deployed sampling task is not; (2) a measured phase
@@ -249,7 +249,7 @@ def main():
         "frontier": {},
     }
     print("=" * 78)
-    print("E14 CTQD: train classically, deploy quantumly (SPEC §14r)")
+    print("E14 CTQD: train classically, deploy quantumly")
     print("=" * 78)
 
     # ------------------------------------------------------------------ CTQD
@@ -326,7 +326,7 @@ def main():
 
     # ---------------------------------------------------------------- frontier
     print("-" * 78)
-    print("Sampling-surrogate frontier (SPEC D9/E9): entropy, Schmidt rank, bond")
+    print("Sampling-surrogate frontier: entropy, Schmidt rank, bond")
     for n in N_LIST + N_FRONTIER_EXTRA:
         row = {}
         if n in N_LIST:

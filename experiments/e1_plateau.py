@@ -1,4 +1,4 @@
-"""E1: gradient-variance barren-plateau sweep (SPEC section 9, D3/D4/D7).
+"""E1: gradient-variance barren-plateau sweep.
 
 Global |0...0> cost, random init only. For n = 2..12 and two depth regimes
 (L = O(log n) and L = O(n)) we estimate the per-parameter gradient variance

@@ -1,4 +1,4 @@
-"""E9: chi-swept MPS surrogate for the trained QNN (SPEC D9 / E4-simulability).
+"""E9: chi-swept MPS surrogate for the trained QNN.
 
 The other half of D9 (E8 §14l covers the entanglement half). We ask the D9.1
 question directly: *does a small-bond-dimension MPS reproduce the trained QNN's

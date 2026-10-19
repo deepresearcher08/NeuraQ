@@ -1,4 +1,4 @@
-"""Batched QNN binary classifier on the single-axis ansatz (SPEC E6, Core Task 3).
+"""Batched QNN binary classifier on the single-axis ansatz.
 
 Pipeline
 --------

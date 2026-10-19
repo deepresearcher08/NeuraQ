@@ -1,4 +1,4 @@
-"""Shot-noise helpers for the Ising task (SPEC D8).
+"""Shot-noise helpers for the Ising task.
 
 A measurement estimator for ``<H>`` that budgets shots *per basis*:
 

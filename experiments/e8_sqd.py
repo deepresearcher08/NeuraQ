@@ -1,4 +1,4 @@
-"""E8: SQD/QSCI simulability + contrast probe (SPEC D9/E8).
+"""E8: SQD/QSCI simulability + contrast probe.
 
 Sample-based quantum diagonalisation (SQD/QSCI): sample computational-basis
 bitstrings from a state, build the sub-space they span (plus, for the TFIM, all
@@ -23,8 +23,8 @@ Honest reading this experiment is set up to support: at these widths the whole
 Hilbert space is classically diagonalisable, so *any* sufficiently entropic
 sampler eventually recovers the ground energy once its samples cover the space
 -- the interesting question is the sample efficiency of each sampler and the
-entanglement structure, not a quantum advantage. Frames per the Cerezo et al.
-perspective ("Yes and No"), see SPEC D9.
+entanglement structure, not a quantum advantage. Framed after the Cerezo et al.
+perspective ("Yes and No").
 
 Run:  python experiments/e8_sqd.py
 """

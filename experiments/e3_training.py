@@ -1,8 +1,8 @@
 """E3: headline equal-budget training comparison on the Ising task
-(SPEC section 9, D1-D6, D8).
+.
 
 Six arms, all on the period-4 folded palindromic schedule at M = 2n+1
-(SPEC 14f resolves the expressivity trap):
+:
 
   global_random    -- infidelity cost, random init  (baseline: expect BP harm)
   global_identity  -- infidelity cost, identity init

@@ -1,4 +1,4 @@
-"""Repetition-code "learn to decode" task for the QNN (SPEC E10).
+"""Repetition-code "learn to decode" task for the QNN.
 
 Combine-with-another-track stretch: a quantum neural network that *learns to
 decode* a bit-flip repetition code. A logical bit ``b`` is encoded as ``b``
@@ -10,7 +10,7 @@ The Bayes-optimal decoder for the repetition code is **majority vote**, which is
 a *linear* function of the received bits, so a logistic classifier is already
 optimal. This is therefore a **mechanism / transfer** study of the barren-
 plateau machinery on a decoding task, **not** a competitive decoder and **not**
-a quantum-advantage claim (SPEC section 12). The point of interest is whether
+a quantum-advantage claim. The point of interest is whether
 the local-vs-global readout and init story (E2/E6) transfers to decoding, and
 how the loss-gradient variance scales with code distance ``d``.
 

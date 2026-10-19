@@ -1,8 +1,8 @@
-"""E2b: init / layerwise mitigations on the Ising protocol (SPEC section 9, E2b).
+"""E2b: init / layerwise mitigations on the Ising protocol.
 
 Identity-block and layerwise mitigations are measured on the *Ising* task
 (energy cost ``<H>``, local) where an identity init is **not** degenerate
-(SPEC section 6) -- never on the |0...0> protocol. Two parts:
+ -- never on the |0...0> protocol. Two parts:
 
   A. Gradient variance at the initial point: identity-block vs random init
      (adjoint gradients, N inits).
@@ -19,7 +19,7 @@ Structural note (recorded Honest-field): with the *default* odd-M alternation
 L-BFGS oracle floors at rel_err ~1.18 at M=17. The **period-4 folded
 palindromic** schedule ``...Y,Z,Z,Y,<centre>,Y,Z,Z,Y,...`` reaches rel_err
 ~6e-3. Both are palindromic and identity-block compatible; E2b uses the
-folded schedule (the default remains the alternation documented in SPEC 4).
+folded schedule (the default elsewhere is still the plain alternation).
 
 Run:  python experiments/e2b_init_layerwise.py
 """
@@ -42,7 +42,7 @@ from bpqnn.train import adam_train, layerwise_adam_train, lbfgs_train
 
 N = 8
 H = 1.0
-M = 2 * N + 1  # odd -> identity-block constructible; ~2n depth (SPEC 14c.4)
+M = 2 * N + 1  # odd -> identity-block constructible; ~2n depth
 BLOCK = 6
 MAX_STEPS = 600
 N_INIT_VAR = 128

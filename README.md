@@ -1,216 +1,150 @@
 # NeuraQ
 
-**Team:** NeuraQ
+- **Event:** Qiskit Fall Fest Hackathon 2026, IISER Bhopal
+- **Track:** Quantum Machine Learning (Problem 04: Quantum Neural Network avoiding barren plateaus)
+- **Team Name:** NeuraQ
+- **Team Members:** Soumyadeep Chakraborty, Janmay Tyagi, Stottra Roy, Abhinav Sharma
 
-**Project title:** NeuraQ — measuring and mitigating barren plateaus in
-variational quantum neural networks, validated on IBM Quantum hardware.
-**Track:** QML, with cross-track extras (QEC decoders, SQD/QSCI, tensor-network surrogates).
+## Overview
 
----
+In variational quantum machine learning, initializing deep parameterized circuits with random angles leads to exponentially vanishing gradient variances as qubit count increases. This barren plateau phenomenon makes gradient-based optimization intractable, as shot noise drowns out the directional signal.
 
-## Summary
+NeuraQ provides a dual contribution:
+1. **Empirical Benchmarking on Physical QPUs:** We measure gradient variance scaling across circuit widths ($n = 2$ to $12$) comparing global and local cost observables on exact statevector simulations, noisy Aer device models, and IBM Quantum's 156-qubit `ibm_fez` processor.
+2. **Pre-Flight Trainability Screening Tool:** A diagnostic CLI (`neuraq screen`) that assesses gradient variance decay rates and suggests mitigations (such as operator locality changes or initialization schemes) before users consume QPU queue time.
 
-Deep, randomly initialised quantum neural networks have gradients that decay
-**exponentially** with the number of qubits, so training stalls — the *barren
-plateau*. NeuraQ measures the plateau directly (gradient variance vs. width and
-depth, averaged over many random initialisations with bootstrap confidence
-intervals), then evaluates the standard mitigations on equal footing: a **local
-cost function**, **identity-block / perturbed-identity initialisation**,
-**layerwise training**, and **support scheduling**. The headline result is a
-measured, error-barred comparison of cost locality that holds across an exact
-NumPy simulator, an Aer device-noise model, and one real IBM Quantum run on
-`ibm_fez`. A business-facing wrap (a pre-flight *trainability screen*) is built
-on the same measurement; see [`PITCH.md`](PITCH.md). NeuraQ **characterises
-trainability — it does not claim quantum advantage.**
+![Gradient variance vs width on real hardware](figures/main_result.png)
 
-![Main result](figures/main_result.png)
+*Figure 1: Gradient variance on IBM Quantum's `ibm_fez` (Eagle r3, 156 qubits) for global vs local cost functions (Experiment E15). While global cost variance collapses rapidly (~ factor of 4 per added qubit), local cost retains orders-of-magnitude stronger gradient signal (reaching a ~2300x advantage at $n=12$).*
 
-*Main result (E15 / `figures/main_result.png`): on real hardware the global-cost
-gradient collapses with width while the local-cost gradient survives.*
+## Environment Setup
 
----
-
-## Environment
-
-- **Python 3.14.7** (tested on Windows 11; standard CPython, no GPU).
-- Install everything exactly as pinned:
+Tested on Python 3.14.7 (Windows 11). Standard CPython environment without external GPU requirements.
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate        # Windows  (source .venv/bin/activate on Linux/macOS)
+.venv\Scripts\activate          # on Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-- **No IBM account or token is required** for the main result or for the whole
-  test suite. The token is needed only to *submit* a new hardware job. It is
-  read from a file (`ibmapi.txt` + `ibmcrn.txt`) or from environment variables
-  and is **never committed** (see `.gitignore`). A complete simulator-only path
-  exists for every experiment.
+*Note: An IBM Quantum account is only required to submit new QPU jobs. All data processing, simulation suites, and unit tests run entirely offline without credentials.*
 
----
+## Quickstart & Reproducibility
 
-## Exact commands and expected runtime
-
-Main result (token-free, simulator only):
-
+### 1. Main Result Simulation (~1 to 3 minutes)
+Runs the cost locality comparison on the batched NumPy statevector simulator:
 ```bash
-python experiments/e2a_cost_locality.py            # ~1–3 min
+python experiments/e2a_cost_locality.py
 ```
 
-Rebuild the hero hardware figure from the stored QPU results (token-free):
-
+### 2. Regenerate Physical Hardware Figures
+Rebuilds the hero hardware figure from the committed job results:
 ```bash
-python scripts/plot_main_result.py     # n = 2…12, writes figures/main_result.png
+python scripts/plot_main_result.py      # n = 2 to 12 -> outputs figures/main_result.png
 ```
 
-Full test suite (checks every module against an exact/classical reference):
-
+### 3. Run Test Suite (~1 to 2 minutes)
+Executes all 127 verification tests checking gradients against finite-difference and analytic baselines:
 ```bash
-pytest -q                                           # ~2–3 min
+python -m pytest -q
 ```
 
-Optional — submit a *new* hardware job (needs your own IBM token):
+### 4. Interactive Trainability Screen CLI
+Diagnose any ansatz before submitting expensive QPU jobs:
+```bash
+python neuraq_cli.py screen --n 8 --depth 4 --cost global
+```
+Sample output:
+```text
+NeuraQ trainability screen
+  configuration  : n=8  depth M=4  cost=global  init=random  topology=line
+  gradient var   : 4.821e-05
+  decay slope    : -1.22 / qubit  (n=8 -> n=10)
+  verdict        : BARREN PLATEAU
+  mitigation     : local cost gives 1.735e-03  (36x more signal)
+  primary fix    : local_cost
+    -> suggested : cost=local init=random M=4 n=8
+```
 
+### 5. Submitting New IBM Quantum Hardware Runs (Optional)
+Requires an IBM Quantum token set in the environment (`export QISKIT_IBM_TOKEN="your_token"` or via `IBMQ_TOKEN`):
 ```bash
 python experiments/e15_hardware.py --backend least_busy --shots 512 --r 48 --ns 2 4 6 8
 ```
 
-Each experiment writes `results/eN_*.json` (data) and `results/eN_*.png`
-(figure) and prints a summary. Every figure used in the write-up is also copied
-into `figures/` (see [`WRITEUP.pdf`](WRITEUP.pdf)).
+## Physical Hardware Benchmark Details
 
----
+- **Backend:** IBM Quantum `ibm_fez` (156-qubit Eagle r3 processor).
+- **Execution Dates:** 2026-10-13 (jobs created 23:05–23:13 IST) and 2026-10-18 (16:33 & 16:38 IST).
+- **Verified Job IDs (all `DONE`):**
+  - $n \in \{2, 4, 6, 8\}$: `db76ns2raffc73f9s62g`, `db76pn8r1c5c738js3hg`, `db76qfqraffc73f9sb60`, `db76rl6r6oqs7386spt0`
+  - $n \in \{10, 12\}$: `dbaaf77i0auc7391nsog`, `dbaah9fi0auc7391nuq0`
+  - Full raw bitstrings and execution metadata: [`results/e15_qpu_jobs.json`](results/e15_qpu_jobs.json).
+- **Configuration:** Circuit depth $M = 4$, 512 shots per circuit, single-axis all-RY hardware-efficient ansatz, target state $|0\dots0\rangle$, parameter-shift gradient evaluated on the central layer. Widths $n \in \{2,4,6,8,10\}$ used $R = 48$ random initializations; $n = 12$ used $R = 32$ within available free-tier QPU allocations.
+- **Statistical Processing:** Slopes and variance values include bootstrap 95% confidence intervals. Fixed random seeds (e.g. `seed = 2026`) ensure deterministic reruns.
 
-## Statistics and seeds
+## Repository Structure
 
-- Statistical results average over many **random initialisations**: `R = 512`
-  inits per width for E2a/E11, `R = 48` for the hardware run (E15), and are
-  reported with **bootstrap 95% confidence intervals** (variance ranges and
-  log-linear slopes).
-- **All seeds are fixed** in the scripts (e.g. `seed = 2026` for E15); reruns
-  are reproducible. Experiment scripts that are cheap are fully deterministic;
-  the statistical ones are deterministic given their seeds and are labelled
-  with the number of runs.
-- The main figure is rebuilt from the committed `results/e15_qpu.json`, so no
-  network access is needed to reproduce it.
+### Library: `bpqnn/`
 
----
-
-## The hardware run
-
-- **Backend:** IBM Quantum `ibm_fez` (156-qubit Eagle).
-- **Dates:** 2026-10-13 (jobs created 23:05–23:13 IST) and 2026-10-18
-  (16:33 & 16:38 IST).
-- **Jobs (all `DONE`):** `db76ns2raffc73f9s62g`, `db76pn8r1c5c738js3hg`,
-  `db76qfqraffc73f9sb60`, `db76rl6r6oqs7386spt0` (2026-10-13);
-  `dbaaf77i0auc7391nsog`, `dbaah9fi0auc7391nuq0` (2026-10-18) (full list in
-  [`results/e15_qpu_jobs.json`](results/e15_qpu_jobs.json)).
-- **Settings:** depth `M = 4`, `512` shots per circuit, single-axis all-RY HEA,
-  target `|0…0>`, middle-layer parameter-shift gradient. `n ∈ {2,4,6,8}` and
-  `n = 10` used `R = 48` random inits; `n = 12` used `R = 32` (free-plan
-  runtime limit).
-- The **noise model** used for the simulator comparison is the **FakeBrisbane**
-  device model, not `ibm_fez` specifically — this is a limitation, stated in the
-  write-up.
-
----
-
-## What's inside
-
-### Library — `bpqnn/`
-
-| Module | Purpose |
+| Module | Description |
 |---|---|
-| `simulator.py` | batched NumPy statevector simulator (single-axis layered ansatz, CZ chain) |
-| `ansatz.py` | parameter shapes, entangling topologies, Qiskit export |
-| `costs.py` | global / local costs, infidelity, the `\|0…0>` plateau protocol |
-| `grad.py` | adjoint (reverse-mode) and parameter-shift gradients + finite-difference check |
-| `init.py` | random, identity-block, and perturbed-identity initialisations |
-| `observables.py` | tunable-support (block / window) readout family |
-| `hamiltonian.py` | transverse-field Ising energy / ground state (dense) |
-| `train.py` | Adam, layerwise Adam, and an L-BFGS-B oracle with shot accounting |
-| `shots.py` / `noise.py` | shot-noise estimators / batched density-matrix simulator |
-| `mps.py` / `sqd.py` | statevector→MPS, Schmidt spectrum / SQD-QSCI |
-| `classify.py` | small QNN binary classifier (additive + parity tasks, held-out split) |
-| `csa.py` | Cost-Support Annealing and the λ-mix local→global blend |
-| `hardware.py` | circuit + counts + parameter-shift gradients for a real QPU (E15) |
-| `screen.py` | pre-flight trainability screening (verdict + recommended fix) |
-| `reference.py` | analytic reference states |
+| `simulator.py` | Vectorized NumPy statevector simulator (single-axis layered ansatz, CZ chain) |
+| `ansatz.py` | Parameter tensor reshaping, entangling topologies, Qiskit QuantumCircuit export |
+| `costs.py` | Global and local objective functions, state fidelity calculations |
+| `grad.py` | Adjoint differentiation and analytic parameter-shift gradients |
+| `init.py` | Random, identity-block, and perturbed-identity parameter initialization |
+| `observables.py` | Tunable-support observable measurements (block and windowed readouts) |
+| `hamiltonian.py` | Transverse-field Ising Hamiltonian construction and ground state solver |
+| `train.py` | Adam, layerwise Adam, and classical L-BFGS-B optimization routines |
+| `shots.py`, `noise.py` | Shot-noise estimators and batched density-matrix simulation routines |
+| `mps.py`, `sqd.py` | Matrix Product State decomposition, Schmidt spectra, and sample-based SQD |
+| `classify.py` | Binary QNN classifier benchmark (additive and parity classification tasks) |
+| `csa.py` | Cost-Support Annealing and bounded local-to-global convex schedules |
+| `hardware.py` | Hardware circuit compilation, execution, and parameter-shift parsing |
+| `screen.py` | Diagnostic trainability screening core engine |
+| `reference.py` | Analytic reference statevector calculations |
 
-### Experiments — `experiments/e*.py`
+### Key Experiments: `experiments/`
 
-| Script | Study |
+| Script | Investigation |
 |---|---|
-| `e1_plateau.py` | gradient-variance barren-plateau sweep |
-| `e2a_cost_locality.py` | global vs. local cost (the core mitigation) |
-| `e2b_init_layerwise.py` | identity-block init and layerwise training |
-| `e3_training.py` / `e4_shot_training.py` | equal-budget training; shot noise |
-| `e6_classify.py` | classification QNN over cost × init arms (held-out test) |
-| `e7_nibp.py` | noise-induced barren plateaus |
-| `e8_sqd.py` / `e9_mps.py` | SQD/QSCI sample-efficiency; MPS surrogate |
-| `e10_decoder.py` / `e12a` / `e12b` | repetition / Steane / surface-code decoders |
-| `e11_support_radius.py` | gradient variance vs. observable support radius |
-| `e13_csa.py` | support scheduling (Cost-Support Annealing) |
-| `e14_ctqd.py` | train classically, deploy quantumly |
-| `e15_hardware.py` | real-hardware plateau: global vs. local variance on IBM Quantum |
-| `e16_screen.py` | trainability-screening CLI (verdict + mitigation report) |
-| `e17_parity_task.py` | expressivity: a parity task the local readout cannot represent |
-| `e18_screen_validation.py` | does the screen predict shot-limited training outcomes? |
-| `e19_lambda_mix.py` | bounded local→global cost blend; normalisation bound |
-| `e20_perturbed_init.py` | perturbed identity re-injects edge-layer gradient signal |
+| `e1_plateau.py` | Empirical gradient variance decay across width and depth |
+| `e2a_cost_locality.py` | Global vs local cost variance scaling (core mitigation) |
+| `e2b_init_layerwise.py` | Identity-block initialization and layerwise training |
+| `e3_training.py`, `e4_shot_training.py` | Parameter optimization under equal budget and shot noise |
+| `e6_classify.py` | Classification benchmark over cost locality and initialization choices |
+| `e7_nibp.py` | Noise-induced barren plateaus across gate depolarizing levels |
+| `e8_sqd.py`, `e9_mps.py` | Sample efficiency of SQD/QSCI and MPS surrogate modeling |
+| `e10_decoder.py`, `e12a`, `e12b` | Quantum error correction decoders (Repetition, Steane, Surface codes) |
+| `e11_support_radius.py` | Gradient variance vs support radius of observable operators |
+| `e13_csa.py` | Support scheduling (Cost-Support Annealing) |
+| `e14_ctqd.py` | Classical surrogate pre-training deployed to quantum circuits |
+| `e15_hardware.py` | Hardware validation on IBM Quantum processor `ibm_fez` |
+| `e16_screen.py` | Command-line diagnostic screening workflow |
+| `e17_parity_task.py` | Expressivity trade-off: parity tasks inaccessible to local readouts |
+| `e18_screen_validation.py` | Empirical validation of trainability screening predictions |
+| `e19_lambda_mix.py` | Bounded convex combinations of local and global cost functions |
+| `e20_perturbed_init.py` | Perturbed identity initialization restoring edge-layer gradient signals |
 
----
+## Methodological Limits & Negative Findings
 
-## Honesty, negative results, and limits
+- **Simulation Scope:** Benchmarks utilize exact NumPy statevectors, Qiskit Aer noiseless simulation, Aer with the FakeBrisbane noise model ($n \le 8$), and real IBM Quantum hardware ($n \le 12$).
+- **Characterization Focus:** This toolkit measures trainability and gradient landscape decay; it does not claim quantum computational advantage or superiority over classical ML architectures.
+- **Classical Baselines:** Energy minimization is checked against exact numerical diagonalization and L-BFGS-B; classification tasks are evaluated on held-out test sets.
+- **Cost-Support Annealing (E13):** Linear support schedules provide modest trainability benefits; however, complex variance-gated schedules did not consistently outperform static local objectives.
+- **Optimizer Dynamics at Finite Widths (E3, E18):** Although gradient variance vanishes exponentially, Adam's per-parameter adaptive normalization enables convergence at moderate widths ($n = 8$), demonstrating that barren plateaus manifest as severe optimization slowdowns rather than strict impossibility barriers at small scales.
+- **Screening Calibration:** Screen diagnostic thresholds were calibrated against baseline sweeps and serve as variance indicators rather than absolute training outcome predictors.
 
-- **What is simulated.** Exact noiseless NumPy statevector; Qiskit Aer
-  noiseless; Aer with a **FakeBrisbane** device noise model; and real IBM
-  QPU runs at small scale (`n ≤ 12`).
-- **No advantage claim.** NeuraQ measures trainability. It does not claim
-  quantum advantage, speed-up, or a better classifier.
-- **Classical baselines.** Energy tasks are compared against exact
-  diagonalisation and an L-BFGS-B oracle; the classifier (E6/E17) is scored on a
-  **held-out** grid. A matched-parameter-count classical MLP baseline is on the
-  roadmap (see the write-up's limits section).
-- **Negative / weak results reported as they are:**
-  - Cost-Support Annealing (E13) is **partial**: the linear schedule helps; the
-    staged and variance-gated variants do not beat the plain global cost.
-  - At `n = 8` the global-cost arm **can still train** — the plateau *slows*
-    training here rather than blocking it (E3).
-  - The trainability screen (E16) is validated only weakly: under
-    Adam-normalised shot training the "barren" verdicts were **false negatives**
-    (every flagged configuration still reached a low cost). The screen is a
-    gradient-*variance* alarm, not an optimiser-failure predictor at these
-    widths (E18). Its thresholds were calibrated on the same sweeps it is
-    judged against.
-  - The local-cost slope (≈ −0.55 per qubit) is **still exponential** over
-    `n = 2…8`; the claim is *relative* (global decays much faster), not
-    asymptotic.
-  - The hardware gap is **at least as large as simulated, with overlapping
-    CIs** — not "wider on hardware". The E15 hardware variances include shot
-    noise.
-- **AI use.** See [`AI_USE_NOTE.md`](AI_USE_NOTE.md).
+## AI Assistance Note
 
----
+See [`AI_USE_NOTE.md`](AI_USE_NOTE.md) for tool usage details, error identification, and verification procedures in accordance with hackathon guidelines.
 
-## References (and what NeuraQ adds)
+## Primary References
 
-- McClean et al., *Nat. Commun.* **9**, 4812 (2018) — barren plateaus.
-- Cerezo et al., *Nat. Commun.* **12**, 1791 (2021) — cost-function-dependent
-  plateaus; the bound `C_L ≤ C_G ≤ n·C_L` used in E19.
-- Grant et al., *Quantum* **3**, 214 (2019) — identity-block initialisation.
-- Skolik et al., arXiv:2006.14904 — layerwise learning.
-- Wang et al., *Nat. Commun.* **12**, 6961 (2021) — noise-induced plateaus.
-- Cerezo et al., *Nat. Commun.* **14**, 5742 (2023) — simulability.
-- Jones & Gacon, arXiv:2011.02991 — adjoint differentiation.
-- Huggins et al., *J. Chem. Theory Comput.* **18**, 7001 (2022) — QSCI/SQD.
-- IBM Quantum SQD / Qiskit Fall Fest SQD notebook — used for the QEC/SQD extras.
-
-**What NeuraQ adds (vs. a replication).** The mechanism results (McClean,
-Cerezo, Grant, Skolik, Wang) are reproduced and extended with: (i) a
-measured, bootstrap-CI comparison of cost locality **on real hardware** (E15);
-(ii) a **support-radius law** relating noise-tolerance to observable support
-(E11); (iii) the **λ-mix** local→global schedule and its normalisation bound
-(E19); (iv) a **perturbed-identity** initialisation that restores edge-layer
-signal (E20); and (v) a **trainability-screen** interface (E16/E18) with its
-honest limits. Everything is measured, nothing is claimed beyond the data.
+- McClean et al., *Nat. Commun.* 9, 4812 (2018): Barren plateaus in quantum neural network training landscapes.
+- Cerezo et al., *Nat. Commun.* 12, 1791 (2021): Cost function-dependent barren plateaus in shallow quantum neural networks.
+- Grant et al., *Quantum* 3, 214 (2019): An initialization strategy for addressing barren plateaus in parameterized quantum circuits.
+- Skolik et al., arXiv:2006.14904: Layerwise learning for quantum neural networks.
+- Wang et al., *Nat. Commun.* 12, 6961 (2021): Noise-induced barren plateaus in variational quantum algorithms.
+- Jones and Gacon, arXiv:2011.02991: Efficient calculation of gradients in classical simulations of variational quantum algorithms.

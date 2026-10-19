@@ -2,7 +2,7 @@
 
 Exact-gradient training (E3) showed that Adam's per-parameter normalisation
 masks raw-gradient decay, so mitigation did not show up in training success.
-This experiment asks the question on a *sampled* pipeline (SPEC D8), where
+This experiment asks the question on a *sampled* pipeline, where
 gradients are estimated from measurements:
 
   global cost   -- sampled infidelity 1 - |<gs|state>|^2 (one Bernoulli

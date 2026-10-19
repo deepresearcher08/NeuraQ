@@ -1,4 +1,4 @@
-"""E2a: cost-locality mitigation on the |0...0> protocol (SPEC section 9, E2a).
+"""E2a: cost-locality mitigation on the |0...0> protocol.
 
 We compare the *global* cost C_G = 1 - P(0...0) with the *local* cost
 C_L = 1 - (1/n) sum_i P_i(0) at fixed random init. Cerezo et al.
@@ -13,7 +13,7 @@ plateaus once L = O(poly n). This experiment maps that boundary empirically:
      the variance collapses (the polynomial -> exponential transition).
 
 Random init only; identity-block / layerwise are E2b (never run here -- on the
-|0...0> target an identity init has C = 0 exactly, SPEC section 6).
+|0...0> target an identity init has C = 0 exactly).
 
 Run:  python experiments/e2a_cost_locality.py
 """
@@ -64,7 +64,7 @@ def aggregate_var(g) -> float:
 
 
 def position_vars(g) -> dict:
-    """Per-layer mean variance at fixed relative positions (SPEC D7)."""
+    """Per-layer mean variance at fixed relative positions."""
     per_layer = g.var(axis=0).mean(axis=1)
     M = g.shape[1]
     return {"first": float(per_layer[0]),

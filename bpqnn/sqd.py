@@ -1,4 +1,4 @@
-"""SQD / QSCI: sample-based quantum diagonalisation (SPEC E8).
+"""SQD / QSCI: sample-based quantum diagonalisation.
 
 Sample-based quantum diagonalisation (SQD) and quantum-selected CI (QSCI)
 turn a set of computational-basis bitstrings -- typically sampled from a
@@ -11,7 +11,7 @@ For the transverse-field Ising chain
 itself (diagonal ``ZZ``) and to every single-bit flip (the ``X`` terms), so the
 connected space is the sampled set plus all single-bit flips.
 
-The point of interest for this study is *simulability* (SPEC D9): if a small
+The point of interest for this study is *simulability*: if a small
 classically-diagonalised subspace reproduces the energy, then the quantum
 device is providing samples into a cheap classical post-processing (a QESIM
 style algorithm), and gradient-free SQD can sidestep the optimisation plateau

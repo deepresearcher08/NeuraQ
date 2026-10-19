@@ -1,9 +1,9 @@
-"""CTQD: classically-trained, quantum-deployed sampling (SPEC E14).
+"""CTQD: classically-trained, quantum-deployed sampling.
 
 The plateau-mitigation framework -- local costs, identity init, layerwise
 training, support annealing -- never escapes the Cerezo-Larocca dictum:
 provably-trainable losses live in polynomial subspaces and are classically
-simulable (SPEC D9 / E8-E9 measured this for our own ansatz). E14 *inverts*
+simulable. E14 *inverts*
 the question: keep ALL optimisation classical, and reserve the quantum role
 for enumerative *sampling* at deployment ("train on classical, deploy on
 quantum", Krovi et al. 2025).

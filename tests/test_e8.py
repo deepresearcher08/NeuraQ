@@ -1,4 +1,4 @@
-"""Tests for the SQD/QSCI probe (SPEC E8)."""
+"""Tests for the SQD/QSCI probe."""
 
 import numpy as np
 

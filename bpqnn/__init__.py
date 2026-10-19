@@ -1,7 +1,7 @@
 """bpqnn: barren-plateau-resistant QNN toolkit.
 
 Batched NumPy statevector simulator plus the pieces needed to characterise
-barren plateaus and mitigations (see SPEC.md).
+barren plateaus and mitigations.
 """
 
 from .simulator import StatevectorSimulator

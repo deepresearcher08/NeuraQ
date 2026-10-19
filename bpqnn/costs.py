@@ -1,7 +1,7 @@
 """Cost functions.
 
 - ``global_cost_zero`` / ``local_cost_zero``: the plateau-protocol costs with
-  target |0...0> (SPEC section 5).
+  target |0...0>.
 - ``infidelity``: global training cost for the Ising task.
 - ``ising_energy`` lives in ``hamiltonian.py`` (local training cost).
 """

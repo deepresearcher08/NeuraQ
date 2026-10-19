@@ -1,4 +1,4 @@
-"""E6: classification QNN (SPEC E6, Core Task 3).
+"""E6: classification QNN.
 
 Small binary classification task: 2-feature *additive* grid
 (16 points, label = sign(x0 + x1 - 1)), angle-encoded into qubits 0-1 of an

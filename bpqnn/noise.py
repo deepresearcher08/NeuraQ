@@ -1,4 +1,4 @@
-"""Batched density-matrix simulator with per-qubit depolarising noise (SPEC E7).
+"""Batched density-matrix simulator with per-qubit depolarising noise.
 
 Same circuit template as ``simulator.StatevectorSimulator``
 (``R_1 E R_2 E ... E R_M``, one single axis per layer, CZ chain between layers)

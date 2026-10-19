@@ -41,19 +41,31 @@ RESULTS = ROOT / "results"
 # --------------------------------------------------------------------------- #
 # device + backend plumbing
 # --------------------------------------------------------------------------- #
-def load_token(path: str) -> str:
-    """Read the token from a file, without printing it."""
-    txt = pathlib.Path(path).read_text().strip()
-    if not txt:
-        raise ValueError(f"token file {path} is empty")
-    if txt.startswith("{"):  # JSON form
-        obj = json.loads(txt)
-        for k in ("token", "api_key", "apikey", "IBMQ_TOKEN", "key"):
-            if k in obj:
-                return str(obj[k]).strip()
-    if "=" in txt:  # KEY=VALUE form
-        return txt.split("=", 1)[1].strip().strip('"').strip("'")
-    return txt  # bare token (single line)
+def load_token(path: str | None = None) -> str:
+    """Read the token from environment variables or a file, without printing it."""
+    import os
+    for env_var in ("QISKIT_IBM_TOKEN", "IBMQ_TOKEN", "IBM_QUANTUM_TOKEN"):
+        val = os.environ.get(env_var)
+        if val and val.strip():
+            return val.strip()
+    if path:
+        p = pathlib.Path(path)
+        if p.is_file():
+            txt = p.read_text().strip()
+            if not txt:
+                raise ValueError(f"token file {path} is empty")
+            if txt.startswith("{"):  # JSON form
+                obj = json.loads(txt)
+                for k in ("token", "api_key", "apikey", "IBMQ_TOKEN", "key"):
+                    if k in obj:
+                        return str(obj[k]).strip()
+            if "=" in txt:  # KEY=VALUE form
+                return txt.split("=", 1)[1].strip().strip('"').strip("'")
+            return txt  # bare token (single line)
+    raise ValueError(
+        f"Token not found. Set QISKIT_IBM_TOKEN (or IBMQ_TOKEN) environment variable, "
+        f"or provide a valid token file at {path}."
+    )
 
 
 def load_instance(path: str | None) -> str | None:

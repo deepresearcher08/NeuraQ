@@ -1,18 +1,16 @@
 """Pre-flight trainability screening for the layered single-axis QNN.
 
-Cheap diagnostic for the question a team asks before it spends shots or QPU
-time on a variational model: *given this width, depth, cost and init, will the
-gradient carry any signal at initialisation, or are we on a barren plateau?*
+Diagnostic utility for variational quantum circuits: evaluates whether a
+given ansatz width, depth, cost function, and initialization will preserve
+trainable gradient variance before committing shots or execution time on a QPU.
 
-It works exactly the way the rest of the toolkit does -- the init-time
-gradient variance of the chosen cost -- and then measures how fast that
-variance decays as the circuit is widened by two qubits. A flat (polynomial)
-decay means the model is trainable; a steep exponential decay is the
-plateau signature. For a global cost it also measures the local-cost
-variance on the same ansatz so the report can quantify the fix.
+The diagnostic computes gradient variance across random initializations and
+measures decay rates as register width scales. A flat or polynomial scaling
+indicates a trainable regime, while steep exponential decay indicates a
+barren plateau. For global cost formulations, it additionally evaluates the
+variance of the corresponding local cost on the same ansatz.
 
-Everything here is pure NumPy: no shots, no hardware, no optimiser. It is the
-screening layer behind E2a/E15 (see PITCH.md).
+All operations execute in batched NumPy statevectors without requiring QPU runtime.
 """
 
 from __future__ import annotations

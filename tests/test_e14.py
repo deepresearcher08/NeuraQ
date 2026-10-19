@@ -1,4 +1,4 @@
-"""Tests for the CTQD module and E14 experiment (SPEC §14r).
+"""Tests for the CTQD module and E14 experiment.
 
 CTQD = "train classically, deploy quantumly": the IQP-style phase ansatz
 ``U(theta) = H^xn D(theta) H^xn`` whose marginal correlators

@@ -1,4 +1,4 @@
-"""E7: noise-induced barren plateaus (NIBP) (SPEC section 9, E7).
+"""E7: noise-induced barren plateaus (NIBP).
 
 The stretch goal in the problem statement asks us to study *noise-induced*
 barren plateaus: environmental decoherence alone can make the gradient vanish
@@ -21,8 +21,8 @@ without noise (E2a) -- we measure the gradient variance over random inits:
      ``p`` (depth x noise is what accumulates the contraction);
   4. vs ``p`` at fixed ``n``.
 
-Identity init is never used here (degenerate on the |0...0> target, SPEC
-section 6).
+Identity init is never used here (on the |0...0> target an identity
+init has zero cost, so there is nothing to train).
 
 Run:  python experiments/e7_nibp.py
 """

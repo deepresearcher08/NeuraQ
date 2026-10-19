@@ -1,4 +1,4 @@
-"""E0 sanity checks (SPEC section 9).
+"""E0 sanity checks.
 
 A. Own batched simulator vs qiskit.quantum_info.Statevector.
 B. Parameter-shift gradients vs central finite differences, for

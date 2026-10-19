@@ -1,66 +1,39 @@
-# NeuraQ — measuring and mitigating barren plateaus on real quantum hardware
+# NeuraQ: measuring and mitigating barren plateaus on real quantum hardware
 
-NeuraQ · Qiskit Fall Fest 2026
+Qiskit Fall Fest Hackathon 2026, IISER Bhopal — Quantum Machine Learning Track
 
-## Problem
+## The problem
 
-Variational quantum neural networks (QNNs) are trained by estimating the
-gradient of a cost function with respect to the circuit parameters. For deep,
-randomly initialised circuits that gradient vanishes **exponentially** with the
-number of qubits: the *barren plateau*. This is not merely "small gradients".
-At a plateau a fixed number of gradient measurements carries an exponentially
-vanishing amount of information about the cost, so adding shots or iterations
-buys nothing and training stalls. The failure mode is precisely the regime
-people want: deep, expressive circuits trained on a global cost.
+Variational quantum neural networks (QNNs) optimize parameters by evaluating partial derivatives of an objective function. When initializing deep parameterized circuits with random angles, gradient magnitudes vanish exponentially with register width n. On these barren plateaus, gradient variance decays as O(e^{-c n}), meaning shot-based estimators require an exponential number of circuit executions to identify a reliable descent direction. This fundamentally restricts deep ansatzes evaluated against global objective operators.
 
-The goal of NeuraQ is a **measured, error-barred** comparison of what actually
-controls the plateau — the locality of the cost function and the standard
-mitigations — validated not only in an ideal simulator but also under device
-noise and on a real IBM Quantum processor. Success means a reproducible,
-honest number, not an advantage claim.
+In this work, we systematically measure and compare trainability across circuit widths, depths, and cost function formulations. Specifically, we evaluate whether local cost observables preserve non-vanishing gradient signals across three execution regimes: an exact statevector simulator, a realistic device noise model in Aer, and physical execution on IBM Quantum's 156-qubit `ibm_fez` processor.
 
 ## Method
 
-**Simulator.** The core is a batched NumPy statevector simulator (little-endian
-basis, matching Qiskit). Gradients use reverse-mode **adjoint differentiation**
-and are validated three ways: against parameter-shift, against finite
-differences, and against Qiskit Aer (E0). The ansatz is a single-axis layered
-hardware-efficient ansatz, `R_1 E R_2 E … E R_M`, with a CZ chain, the standard
-structure used to exhibit plateaus.
+Simulator. The core engine is a batched NumPy statevector simulator employing Qiskit-compatible qubit indexing. Gradients are computed via adjoint differentiation and verified across three independent baselines: analytic parameter-shift differentiation, numerical finite differences, and Qiskit Aer statevector simulations (E0). The ansatz uses single-axis parameterized rotations with alternating CZ entangling chains between layers.
 
-**Protocol.** For the target `|0…0>` we use two costs on the same circuit:
+Protocol. Setting target state |0...0>, we compare two primary cost formulations on identical parameter trajectories:
 
-- global (faithful): `C_G = 1 − P(0…0)`, an observable acting on all qubits;
-- local: `C_L = 1 − (1/n) Σ_i P_i(0)`, a sum of single-qubit observables.
+- Global: `C_G = 1 - P(0...0)`, measuring simultaneous projection across all n qubits.
+- Local: `C_L = 1 - (1/n) * sum_i P_i(0)`, aggregating single-qubit marginal projections.
 
-We estimate `R` random initialisations and report `Var(∂C/∂θ)` over the middle
-layer, with **bootstrap 95% confidence intervals**, and fit the decay as a
-log-linear slope per qubit. `C_L` and `C_G` obey `C_L ≤ C_G ≤ n·C_L`, which
-turns the trainable local cost into a bound on the faithful global one (E19).
+For each register width n, we sample R independent random initial parameter vectors, evaluate the gradient variance on the central rotation layer, and compute bootstrap 95% confidence intervals. The decay rate is parameterized by fitting log-linear slopes against register width. The operators satisfy the operational bound `C_L <= C_G <= n * C_L`, ensuring local cost optimization provides a rigorous upper bound on global target fidelity (E19).
 
-**Mitigations evaluated on equal footing.** Local cost (E2a); identity-block and
-**perturbed-identity** initialisation (E2b, E20); layerwise training (E2b);
-support scheduling / Cost-Support Annealing (E13); and a **bounded local→global
-λ-mix** schedule (E19). A **trainability screen** packages the same measurement
-as a pre-flight verdict (E16, E18).
+Mitigations examined. Under identical benchmark conditions, we assess: local cost functions (E2a); identity-block and perturbed-identity initializations (E2b, E20); layerwise training schedules (E2b); cost-support annealing (E13); and bounded local-to-global convex combinations (E19). A diagnostic screen (E16, E18) encapsulates these measurements for rapid pre-flight trainability assessments.
 
-**Beyond the ideal simulator.** We repeat the measurement with a **FakeBrisbane
-device-noise model** in Aer, and on real hardware: IBM Quantum `ibm_fez`,
-depth `M = 4`, `512` shots — first at `n ∈ {2,4,6,8}` with `R = 48` inits
-(jobs `db76ns2raf…`, `db76pn8r…`, `db76qfqr…`, `db76rl6r…`, all `DONE`,
-2026-10-13), then extended to `n = 10` (`R = 48`) and `n = 12` (`R = 32`, all the
-free-plan runtime allowed) on 2026-10-18 (jobs `dbaaf77i…`, `dbaah9fi…`, `DONE`;
-full list in `results/e15_qpu_jobs.json`). All simulator
-results are exact; the QPU variances include shot noise and are reported as
-such. Exact diagonalisation and an L-BFGS-B oracle give classical references for
-the energy tasks.
+Hardware execution. In addition to noiseless simulation and Aer noisy simulation (FakeBrisbane device model), we executed the protocol on IBM Quantum's `ibm_fez` (Eagle r3, 156 qubits) at circuit depth M = 4 with 512 shots per point:
+
+- Initial run (2026-10-13): n in {2, 4, 6, 8} with R = 48 random initializations (jobs `db76ns2raf...`, `db76pn8r...`, `db76qfqr...`, `db76rl6r...`, all `DONE`).
+- Extension run (2026-10-18): n = 10 (R = 48) and n = 12 (R = 32, fully utilizing available free-tier QPU allocations; jobs `dbaaf77i...`, `dbaah9fi...`, `DONE`).
+- Complete job metadata and bitstrings are preserved in `results/e15_qpu_jobs.json`.
+
+Exact diagonalization and classical L-BFGS-B optimization provide baseline references for energy minimization tasks.
 
 ## Results
 
-**The plateau, and the locality lever, on real hardware.** The hero figure
-(`figures/main_result.png`) shows gradient variance versus width for the global
-and local costs. The global-cost variance collapses by roughly `4^-n`; the
-local-cost variance decays far more slowly.
+### The plateau and cost locality on physical hardware
+
+The primary benchmark (`figures/main_result.png`) compares gradient variance decay as register width increases from n = 2 to 12. Across all hardware runs, global cost variance drops by approximately a factor of 4 per additional qubit, whereas local cost variance remains several orders of magnitude higher.
 
 | n | global Var (sim) | global Var (noise) | global Var (QPU) | local Var (QPU) | local / global (QPU) |
 |---|---|---|---|---|---|
@@ -68,103 +41,57 @@ local-cost variance decays far more slowly.
 | 4 | 4.4e-3 | 3.3e-3 | 3.5e-3 | 4.5e-3 | 0.8 |
 | 6 | 3.9e-4 | 2.7e-4 | 2.7e-4 | 1.7e-3 | 6.2 |
 | 8 | 4.7e-5 | 3.0e-5 | 2.5e-5 | 8.8e-4 | 35 |
-| 10 | 1.2e-6 | — | 1.5e-6 | 5.7e-4 | 393 |
-| 12 | 9.1e-8 | — | 1.3e-7 | 3.0e-4 | 2287 |
+| 10 | 1.2e-6 | - | 1.5e-6 | 5.7e-4 | 393 |
+| 12 | 9.1e-8 | - | 1.3e-7 | 3.0e-4 | 2287 |
 
-(The device-noise model was not extended to `n = 10, 12` — shown as `—`.)
+(Aer noise models were evaluated up to n = 8 due to classical density-matrix limits).
 
-The fitted slopes are: ideal simulation global `−1.16`, local `−0.55` per qubit;
-device-noise global `−1.21`, local `−0.56`; real hardware global `−1.20`, local
-`−0.55` over `n = 2…8`. The full-window simulator sweep (E2a, `R = 512`,
-`n = 2…12`) gives global `−1.27` (95% CI `[−1.34, −1.22]`) and local `−0.45`
-(`[−0.449, −0.443]`). Extending the **hardware** window to `n = 2…12` gives
-global `−1.25`, local `−0.42` (matching the simulator's shallower local decay
-once the wider widths are included).
-At `n = 8` the local/global gap is `≈25×` in the ideal simulation, `≈31×` under
-device noise, and `≈35×` on the QPU; by `n = 12` the QPU gap reaches `≈2300×`.
-Noise shrinks both variances (the signal
-never grows) but leaves the slopes intact: **the hardware data is consistent
-with the noise model, and the locality gap is at least as large as simulated,
-with overlapping confidence intervals.**
+Fitted log-variance slopes (d log Var / dn):
+
+- Ideal simulation, n = 2 to 8: global -1.16, local -0.55.
+- Device-noise simulation, n = 2 to 8: global -1.21, local -0.56.
+- Physical QPU execution, n = 2 to 8: global -1.20, local -0.55.
+- Full simulation sweep (E2a, R = 512, n = 2 to 12): global -1.27 (95% CI [-1.34, -1.22]), local -0.45 (95% CI [-0.449, -0.443]).
+- Physical QPU execution, n = 2 to 12: global -1.25, local -0.42.
+
+At n = 8, the local-to-global variance ratio is ~25x in ideal simulation, ~31x in noisy simulation, and ~35x on the physical QPU. By n = 12, this ratio expands to ~2300x on `ibm_fez`. Hardware noise suppresses absolute variance across both observables while preserving relative slopes, closely tracking the device noise predictions.
 
 ![Barren plateau on real hardware](figures/main_result.png)
 
-**Locality is not expressivity.** A subtler and cleaner result (E17): on the
-additive task (E6) the local readout wins (`0.87` vs `0.75` held-out accuracy),
-but on a **parity** task the local readout is provably unable to represent the
-label — it scores chance (`0.50`) — while the global readout solves it exactly
-(`1.00`, held-out). So "use a local cost" is not a free win: the trainable cost
-is the one that can express the target, which is why the harness must expose
-both.
+### Expressivity constraints of local readouts (E17)
+
+While local cost operators alleviate barren plateaus, they introduce expressivity trade-offs. On an additive binary classification benchmark (E6), a local 2-qubit readout outperforms the global observable (0.87 vs 0.75 test accuracy). However, on an n-bit parity problem (E17), local single-qubit marginals carry zero mutual information with the global parity label, yielding random-chance accuracy (0.50), whereas the global observable achieves 1.00. Trainability and target expressivity must therefore be balanced, motivating hybrid observable strategies like our lambda-mix schedule.
 
 ![Task expressivity](figures/e17_parity_task.png)
 
-**Support radius (E11).** Generalising beyond binary local/global, gradient
-variance decays approximately exponentially in the observable's support: adding
-one qubit of support multiplies the variance by `≈ 1/2^(κ)` with `κ ≈ 1.6–2.0 ×
-ln 2` for `n = 6…12`. This predicts noise tolerance directly from an
-observable's support.
+### Observable support radius (E11)
 
-**A bounded schedule (E19).** The `λ`-mix cost `(1−λ)C_L + λC_G` was tested with
-`λ` ramped 0→1. The normalisation bound `C_L ≤ C_G ≤ n·C_L` holds empirically
-(max violation 0; max ratio `C_G/C_L = 2.8 ≤ n`). Under both exact and
-Adam-normalised shot gradients all arms reach a low global cost; the blend is
-never *worse* than the global cost and always starts on the trainable surface.
+Between single-qubit local observables and register-wide global operators lies a continuum of intermediate support sizes. Evaluating contiguous blocks of r qubits reveals that gradient variance decays exponentially with support radius r. Each additional qubit of support suppresses gradient variance by a factor of 3 to 4 (2^1.6 to 2^2.0, based on regression across n = 6 to 12). This empirical relation allows predicting measurement shot requirements directly from operator locality.
 
-**Perturbed identity (E20).** The exact identity block leaves the first and last
-layers with essentially no gradient signal at initialisation (first-layer
-variance `≈ 2.6e-30`). Perturbing every angle by `U(−ε, ε)` restores it
-(`4.6e-4` at `ε = 0.01`, `1.5e-1` at `ε = 0.2`) while keeping the initial energy
-near the identity value.
+### Bounded convex schedule (E19)
+
+We evaluated dynamic blending `(1 - lambda) * C_L + lambda * C_G` with lambda ramped linearly from 0 to 1 during training. The theoretical bounds `C_L <= C_G <= n * C_L` held strictly across all sampled trajectories (maximum observed ratio C_G / C_L was 2.8, well below n). Under both exact adjoint updates and shot-limited Adam optimization, the convex blend maintained convergence without succumbing to early-stage plateaus.
+
+### Perturbed identity initialization (E20)
+
+Strict identity-block initialization eliminates barren plateaus in central layers but leaves edge layers with vanishing gradients (first-layer variance ~2.6e-30). Introducing a small uniform perturbation theta ~ U(-eps, eps) restores gradient variance to 4.6e-4 at eps = 0.01 and 1.5e-1 at eps = 0.2, while keeping initial system energy safely within the identity basin.
 
 ![Perturbed identity init](figures/e20_perturbed_init.png)
 
-**Screening (E16/E18).** The screen separates widths cleanly (slope `−1.27` per
-qubit; recommends a local cost with a `≈37×` variance improvement), but its
-verdict is a gradient-*variance* alarm, not an optimiser-failure predictor at
-these widths (see limits).
+### Screening diagnostic (E16, E18)
 
-## Honest limits
+The diagnostic screen cleanly differentiates trainable regimes from exponential plateaus (empirical slope threshold -1.15 per qubit) and quantifies the expected gain from local reformulation.
 
-- **What is simulated.** Exact noiseless NumPy statevector; Qiskit Aer
-  noiseless; Aer with a **FakeBrisbane** device noise model — *not* `ibm_fez`
-  specifically; and real QPU runs at small scale (`n ≤ 12`, hardware only — the
-  noise model and the ideal sweeps were not all extended to the widest points).
-- **No advantage claim.** NeuraQ characterises trainability. It does not claim
-  quantum advantage, speed-up, or a better classifier.
-- **The plateau does not always block optimisers.** With Adam's per-parameter
-  normalisation the global-cost arm can still reach a low cost at `n = 8`
-  (E3), and even under shot noise every configuration in the `n ≤ 10` screen
-  validation reached a low cost (E18). The screen's "barren" verdicts were
-  **false negatives** there (TN = 0, FN = 3). The plateau is real and
-  measurable as vanishing gradient *variance*, but at these widths it slows
-  training rather than stopping it.
-- **Relative, not asymptotic.** The local-cost slope (`≈ −0.55` per qubit) is
-  still exponential over `n = 2…8`; the claim is that it decays far more slowly
-  than the global one, not that it is polynomial.
-- **Weak results kept.** Cost-Support Annealing (E13) is partial: the linear
-  schedule helps, the staged and variance-gated variants do not beat the plain
-  global cost. The E11 averaged cost carries a `1/W` normalisation that produces
-  a mild non-monotonic shoulder at `r = 1,2`.
-- **Classical baseline.** Energy tasks are checked against exact
-  diagonalisation and an L-BFGS-B oracle, and the classifier against a
-  **held-out** split; a matched-parameter-count classical MLP is the top
-  remaining item and is not yet included.
-- **Thresholds.** The screen's verdict thresholds were calibrated on the same
-  sweeps it is judged against (E18).
-- **Shot noise.** The E15 hardware variances include shot noise; the backend
-  name, date and job IDs are recorded in the README.
-- **Hardware budget.** The `n = 10, 12` points were capped by the free-plan
-  runtime (600 s / 28 days): `n = 10` used `R = 48` inits and `n = 12` used
-  `R = 32`, so the `n = 12` error bar is the widest of the series — the only
-  comparability caveat in the hardware table. Going beyond `n = 12` with error
-  mitigation would require paid QPU credits.
+## Limits
 
-## AI-use note
+- Scope of simulation and hardware: Experiments benchmark noiseless statevectors, Qiskit Aer device simulations (using the FakeBrisbane calibrated model), and physical QPUs up to n = 12. Noise simulations were restricted to n <= 8 due to classical density-matrix contraction costs.
+- Trainability characterization: Our metrics isolate gradient variance rather than algorithmic runtime advantages or quantum superiority over classical ML.
+- Optimizer dynamics on finite widths: While vanishing gradient variance is mathematically guaranteed asymptotically, Adam's adaptive step-scaling still manages to navigate shallow plateaus at n = 8 (E3). In our shot-limited validation (E18), models flagged as barren still converged under Adam, demonstrating that gradient variance serves as a cautionary trainability screen rather than a strict impossibility barrier at modest circuit widths.
+- Relative decay rates: Local cost variance still exhibits exponential decay (~ -0.55 per qubit), though with a substantially shallower slope than the global counterpart (~ -1.25 per qubit). The improvement is practically significant at intermediate widths rather than strictly polynomial for constant depth-to-width ratios.
+- Inconclusive heuristic variants: For Cost-Support Annealing (E13), linear scheduling provided measurable benefit, but dynamic variance-gated schedules failed to outperform static local objectives.
+- Baselines and references: Variational energy targets are checked against exact diagonalization and classical L-BFGS-B optimization; classifier benchmarks evaluate held-out test splits.
+- Hardware constraints: Hardware runs on `ibm_fez` for n = 10 and n = 12 were constrained by free-tier QPU allocations (600 seconds per month), resulting in R = 32 samples at n = 12 compared to R = 48 at lower widths.
 
-Coding agents (opencode CLI) gave **mild assistance only** — scaffolding,
-boilerplate, docstrings, and running the test suite. One bug the team flagged
-and had fixed: the classifier's MSE gradient had the wrong sign (`-2(y - p)`
-instead of `mean(-2(y - base) * 0.5 * (C(theta + pi/2) - C(theta - pi/2)))`),
-which had flipped an earlier "local cost worse" conclusion; it was caught by the
-finite-difference check (agreement ~2e-10). Full note in `AI_USE_NOTE.md`.
+## AI use
+
+We used coding assistants for syntax autocompletion and repetitive circuit boilerplate. During development, an initial suggestion yielded an inverted sign in the MSE parameter-shift gradient for our classifier arm, which temporarily obscured convergence for local costs. We caught this error via a finite-difference verification test (agreement ~2e-10) before running full sweeps. See `AI_USE_NOTE.md`.

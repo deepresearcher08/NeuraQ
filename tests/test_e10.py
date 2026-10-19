@@ -1,4 +1,4 @@
-"""Tests for the repetition-code decoder QNN (SPEC E10)."""
+"""Tests for the repetition-code decoder QNN."""
 
 import json
 import pathlib

@@ -1,4 +1,4 @@
-"""Tests for the MPS chi-sweep surrogate (SPEC D9 / E9)."""
+"""Tests for the MPS chi-sweep surrogate."""
 
 import numpy as np
 

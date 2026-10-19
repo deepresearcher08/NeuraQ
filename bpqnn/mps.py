@@ -1,4 +1,4 @@
-"""Matrix-product-state (MPS) surrogate for the simulability test (SPEC D9 / E9).
+"""Matrix-product-state (MPS) surrogate for the simulability test.
 
 An MPS writes a state over ``n`` sites as a chain of tensors
 ``A[k][a, s, b]`` (left bond ``a``, physical index ``s``, right bond ``b``).
@@ -126,7 +126,7 @@ def half_chain_entropy(state, n: int) -> float:
     """Von Neumann entropy (base 2) of the |0..n/2> / |n/2+1..n> cut.
 
     The canonical bipartite entanglement entropy used in the simulability
-    study (SPEC D9): for the critical TFIM it is expected to scale as
+    study: for the critical TFIM it is expected to scale as
     ``S ~ (1/3) log n``, which sets the MPS bond dimension needed to reproduce
     the state.
     """

@@ -1,4 +1,4 @@
-"""E11: support-radius law of gradient variance (SPEC section 9).
+"""E11: support-radius law of gradient variance.
 
 Replaces the binary local-vs-global story with a *tunable* one, using the
 observable-support family in ``bpqnn.observables``. For the target ``|0...0>``
@@ -12,7 +12,7 @@ and a contiguous block of ``r`` qubits we study two costs:
 
 For each ``n`` we estimate ``Var(dC/dtheta)`` (aggregate over all ``M*n``
 parameters, ``N_init`` random inits, adjoint gradients) and fit the decay in
-the support radius ``r``. Findings (SPEC §14o):
+the support radius ``r``. Findings:
 
   * ``Var(dC_b)`` decreases **monotonically and approximately exponentially**
     in the support radius ``r``: to leading order each extra qubit of

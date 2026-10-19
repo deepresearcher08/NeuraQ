@@ -1,4 +1,4 @@
-"""Tests for the density-matrix / noisy simulator (SPEC E7)."""
+"""Tests for the density-matrix / noisy simulator."""
 
 import numpy as np
 import pytest

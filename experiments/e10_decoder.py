@@ -1,4 +1,4 @@
-"""E10: decoder QNN on the repetition code (SPEC E10, combine-with-another-track).
+"""E10: decoder QNN on the repetition code.
 
 A QNN that *learns to decode* a bit-flip repetition code: the received d-bit
 word is angle-encoded into d qubits, the single-axis HEA acts, and a readout
@@ -9,7 +9,7 @@ identity-block) -- and the loss-gradient variance is measured vs code distance
 
 Baselines: the analytic Bayes-optimal majority decoder and a classical logistic
 regression on the received bits (which is optimal here -- the repetition decoder
-is linear). Honest framing (SPEC section 12): this is a mechanism/transfer demo,
+is linear). Honest framing: this is a mechanism/transfer demo,
 not a competitive decoder and not a quantum-advantage claim.
 
 Run:  python experiments/e10_decoder.py
