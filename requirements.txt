@@ -17,6 +17,3 @@ pytest==9.1.1
 stim==1.16.0
 pymatching==2.4.0
 scikit-learn==1.9.0
-#
-# Documentation only (regenerating WRITEUP.pdf). Not needed to reproduce results.
-fpdf2==2.8.9
