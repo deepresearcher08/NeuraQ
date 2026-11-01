@@ -1,0 +1,507 @@
+{
+  "config": {
+    "tasks": [
+      "additive",
+      "parity"
+    ],
+    "n_train": 16,
+    "n_test": 400,
+    "qnn_source": "results/e17_parity_task.json",
+    "qnn_n": 6,
+    "qnn_M": 7,
+    "qnn_params": 42,
+    "hidden_matched": 10,
+    "hidden_wide": 32,
+    "seeds": 8,
+    "steps": 200,
+    "lr": 0.05,
+    "protocol": "full-batch Adam, MSE loss, same 8 seeds as E17"
+  },
+  "param_counts": {
+    "qnn": 42,
+    "mlp_matched": 41,
+    "mlp_wide": 129,
+    "logreg": 3,
+    "non_parametric": [
+      "svm_rbf",
+      "knn_k3",
+      "random_forest"
+    ]
+  },
+  "chance_acc": 0.5,
+  "tasks": {
+    "additive": {
+      "qnn_global": {
+        "model": "qnn_global",
+        "readout": "global",
+        "n_params": 42,
+        "median_train_acc": 0.75,
+        "median_test_acc": 0.745,
+        "train_acc": null,
+        "test_acc": [
+          0.745,
+          0.745,
+          0.745,
+          0.745,
+          0.745,
+          0.745,
+          0.745,
+          0.745
+        ],
+        "final_loss": [
+          0.6327387768417505,
+          0.6327387767969448,
+          0.6327387768420578,
+          0.6327387767921573,
+          0.6327387770090592,
+          0.6327387768405632,
+          0.6327387769193553,
+          0.6327387769391606
+        ],
+        "n_seeds": 8,
+        "fit_seconds": null
+      },
+      "qnn_local": {
+        "model": "qnn_local",
+        "readout": "local",
+        "n_params": 42,
+        "median_train_acc": 0.9375,
+        "median_test_acc": 0.865,
+        "train_acc": null,
+        "test_acc": [
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.865
+        ],
+        "final_loss": [
+          0.4091838509599849,
+          0.4091838512082233,
+          0.40918385103715327,
+          0.40918385116624983,
+          0.4091838512826535,
+          0.4091838511962083,
+          0.40918385080857056,
+          0.4091838507223917
+        ],
+        "n_seeds": 8,
+        "fit_seconds": null
+      },
+      "logreg": {
+        "median_train_acc": 0.8125,
+        "median_test_acc": 0.6625,
+        "train_acc": [
+          0.8125
+        ],
+        "test_acc": [
+          0.6625
+        ],
+        "final_loss": [
+          0.75
+        ],
+        "n_seeds": 1,
+        "fit_seconds": 0.027527399826794863,
+        "n_params": 3
+      },
+      "mlp_matched": {
+        "model": "mlp_hidden_10",
+        "n_params": 41,
+        "median_train_acc": 1.0,
+        "median_test_acc": 0.865,
+        "train_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "test_acc": [
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.87,
+          0.865,
+          0.89
+        ],
+        "final_loss": [
+          0.04909557442498749,
+          0.050441936216660294,
+          0.015872976549924825,
+          0.05231196565426097,
+          0.07830652171959399,
+          0.04570147359014022,
+          0.05693946155847286,
+          0.015473308744189049
+        ],
+        "n_seeds": 8,
+        "fit_seconds": 0.1300757999997586
+      },
+      "mlp_wide": {
+        "median_train_acc": 1.0,
+        "median_test_acc": 0.865,
+        "train_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "test_acc": [
+          0.865,
+          0.865,
+          0.8725,
+          0.865,
+          0.865,
+          0.865,
+          0.865,
+          0.8725
+        ],
+        "final_loss": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_seeds": 8,
+        "fit_seconds": 2.286870500072837,
+        "n_params": 129
+      },
+      "svm_rbf": {
+        "median_train_acc": 1.0,
+        "median_test_acc": 0.875,
+        "train_acc": [
+          1.0
+        ],
+        "test_acc": [
+          0.875
+        ],
+        "final_loss": [
+          0.0
+        ],
+        "n_seeds": 1,
+        "fit_seconds": 0.0015295001212507486,
+        "n_params": null
+      },
+      "knn_k3": {
+        "median_train_acc": 0.9375,
+        "median_test_acc": 0.8575,
+        "train_acc": [
+          0.9375
+        ],
+        "test_acc": [
+          0.8575
+        ],
+        "final_loss": [
+          0.25
+        ],
+        "n_seeds": 1,
+        "fit_seconds": 0.004549199948087335,
+        "n_params": null
+      },
+      "random_forest": {
+        "median_train_acc": 1.0,
+        "median_test_acc": 0.88,
+        "train_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "test_acc": [
+          0.88,
+          0.88,
+          0.88,
+          0.88,
+          0.88,
+          0.88,
+          0.88,
+          0.88
+        ],
+        "final_loss": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_seeds": 8,
+        "fit_seconds": 1.7373710998799652,
+        "n_params": null
+      }
+    },
+    "parity": {
+      "qnn_global": {
+        "model": "qnn_global",
+        "readout": "global",
+        "n_params": 42,
+        "median_train_acc": 1.0,
+        "median_test_acc": 1.0,
+        "train_acc": null,
+        "test_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "final_loss": [
+          0.26562500020091134,
+          0.26562500270521205,
+          0.26562500106595166,
+          0.26562500117560106,
+          0.2656251370445846,
+          0.2656250004282192,
+          0.2656250002701774,
+          0.26562500030625846
+        ],
+        "n_seeds": 8,
+        "fit_seconds": null
+      },
+      "qnn_local": {
+        "model": "qnn_local",
+        "readout": "local",
+        "n_params": 42,
+        "median_train_acc": 0.5,
+        "median_test_acc": 0.4975,
+        "train_acc": null,
+        "test_acc": [
+          0.51,
+          0.5125,
+          0.5,
+          0.5075,
+          0.445,
+          0.4475,
+          0.495,
+          0.4575
+        ],
+        "final_loss": [
+          1.0000000000124047,
+          1.0000000000642277,
+          1.000000000057781,
+          1.0000000000442604,
+          1.000000000069533,
+          1.000000000035666,
+          1.0000000000217772,
+          1.000000000011676
+        ],
+        "n_seeds": 8,
+        "fit_seconds": null
+      },
+      "logreg": {
+        "median_train_acc": 0.5,
+        "median_test_acc": 0.5,
+        "train_acc": [
+          0.5
+        ],
+        "test_acc": [
+          0.5
+        ],
+        "final_loss": [
+          2.0
+        ],
+        "n_seeds": 1,
+        "fit_seconds": 0.0016104001551866531,
+        "n_params": 3
+      },
+      "mlp_matched": {
+        "model": "mlp_hidden_10",
+        "n_params": 41,
+        "median_train_acc": 1.0,
+        "median_test_acc": 0.915,
+        "train_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "test_acc": [
+          0.915,
+          0.915,
+          0.955,
+          0.935,
+          0.915,
+          0.91,
+          0.915,
+          0.9225
+        ],
+        "final_loss": [
+          0.012964063210161077,
+          0.07305776252238588,
+          0.016144573035221307,
+          0.015617150940982118,
+          0.058996181809068494,
+          0.017909782311430252,
+          0.03167289798441321,
+          0.01661761525118332
+        ],
+        "n_seeds": 8,
+        "fit_seconds": 0.15367119992151856
+      },
+      "mlp_wide": {
+        "median_train_acc": 1.0,
+        "median_test_acc": 0.9225000000000001,
+        "train_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "test_acc": [
+          0.96,
+          0.88,
+          0.925,
+          0.905,
+          0.9525,
+          0.96,
+          0.92,
+          0.9025
+        ],
+        "final_loss": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_seeds": 8,
+        "fit_seconds": 3.7574638000223786,
+        "n_params": 129
+      },
+      "svm_rbf": {
+        "median_train_acc": 1.0,
+        "median_test_acc": 1.0,
+        "train_acc": [
+          1.0
+        ],
+        "test_acc": [
+          1.0
+        ],
+        "final_loss": [
+          0.0
+        ],
+        "n_seeds": 1,
+        "fit_seconds": 0.0015002000145614147,
+        "n_params": null
+      },
+      "knn_k3": {
+        "median_train_acc": 0.9375,
+        "median_test_acc": 0.91,
+        "train_acc": [
+          0.9375
+        ],
+        "test_acc": [
+          0.91
+        ],
+        "final_loss": [
+          0.25
+        ],
+        "n_seeds": 1,
+        "fit_seconds": 0.00349649996496737,
+        "n_params": null
+      },
+      "random_forest": {
+        "median_train_acc": 1.0,
+        "median_test_acc": 1.0,
+        "train_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "test_acc": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "final_loss": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_seeds": 8,
+        "fit_seconds": 1.7770971001591533,
+        "n_params": null
+      }
+    }
+  },
+  "analysis": {
+    "additive": {
+      "best_classical": "random_forest",
+      "best_classical_test_acc": 0.88,
+      "best_qnn": "qnn_local",
+      "best_qnn_test_acc": 0.865,
+      "qnn_minus_best_classical": -0.015000000000000013,
+      "qnn_within_2_points": true
+    },
+    "parity": {
+      "best_classical": "svm_rbf",
+      "best_classical_test_acc": 1.0,
+      "best_qnn": "qnn_global",
+      "best_qnn_test_acc": 1.0,
+      "qnn_minus_best_classical": 0.0,
+      "qnn_within_2_points": true
+    }
+  },
+  "verdict": {
+    "qnn_competitive_additive": true,
+    "qnn_competitive_parity": true,
+    "additive_best": "random_forest",
+    "parity_best": "svm_rbf",
+    "logreg_additive_test_acc": 0.6625,
+    "logreg_parity_test_acc": 0.5,
+    "linear_fails_parity": true,
+    "matched_mlp_parity_test_acc": 0.915,
+    "summary": "QNN global matches the best classical model on parity; the QNN does not beat ordinary classical ML on either 2-D toy task. Linear regression fails parity as expected. This is a baseline, not a quantum-advantage result."
+  }
+}
